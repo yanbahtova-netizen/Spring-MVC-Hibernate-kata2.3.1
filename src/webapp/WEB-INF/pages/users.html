@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 700px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .delete-form {
+            margin: 0;
+        }
+
+        .add-button {
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Users</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td>
+            <div class="actions">
+                <a th:href="@{/users/edit(id=${user.id})}">Edit</a>
+
+                <form class="delete-form"
+                      th:action="@{/users/delete}"
+                      method="POST">
+
+                    <input type="hidden"
+                           name="id"
+                           th:value="${user.id}">
+
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a class="add-button" th:href="@{/users/new}">Add new user</a>
+
+</body>
+</html>
